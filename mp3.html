@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Retro Music Player — 1.mp3</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --bg:#1b1b1b;
+      --panel:#2f2b2b;
+      --accent:#f3c623;
+      --muted:#bdbdbd;
+      --glass: rgba(255,255,255,0.03);
+    }
+    html,body{height:100%;margin:0;font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;background:linear-gradient(180deg,#0f0f0f 0%, #141414 100%);color:var(--muted);display:flex;align-items:center;justify-content:center;}
+    .player{
+      width:360px;
+      background:linear-gradient(180deg,var(--panel), #231f1f);
+      border-radius:12px;
+      padding:18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .title{
+      font-weight:700;color:var(--accent);font-size:16px;margin-bottom:8px;
+      text-align:center;letter-spacing:0.6px;
+    }
+    .display{
+      background:var(--glass);
+      padding:10px;border-radius:8px;display:flex;align-items:center;gap:12px;margin-bottom:12px;
+    }
+    .disc{
+      width:56px;height:56px;border-radius:50%;
+      background:linear-gradient(135deg,#222 0%, #3a3a3a 100%);
+      display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -6px 14px rgba(0,0,0,0.6);
+      position:relative;overflow:hidden;
+    }
+    .disc::after{
+      content:"";width:10px;height:10px;border-radius:50%;background:#0b0b0b;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 6px rgba(0,0,0,0.15);
+    }
+    .meta{flex:1;}
+    .meta .file{font-size:13px;color:var(--muted);margin-bottom:6px;}
+    .meta .artist{font-size:12px;color:#c6b59a;}
+    .controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .btn{
+      background:transparent;border:0;padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer;font-weight:600;
+      display:inline-flex;align-items:center;gap:8px;user-select:none;
+    }
+    .btn:hover{background:rgba(255,255,255,0.02)}
+    .btn:active{transform:translateY(1px)}
+    .big{
+      background:linear-gradient(90deg,#111 0%, #1b1b1b 100%);
+      padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);
+    }
+    .progress{
+      height:8px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden;cursor:pointer;
+      display:flex;align-items:center;
+    }
+    .progress .bar{
+      height:100%;width:0%;background:linear-gradient(90deg,var(--accent), #ff9f1c);
+    }
+    .time{font-size:12px;color:var(--muted);margin-left:8px;min-width:72px;text-align:right;}
+    .meters{display:flex;gap:6px;align-items:center;margin-top:10px;justify-content:center}
+    .meter{width:6px;height:24px;background:rgba(255,255,255,0.03);border-radius:4px;transform-origin:bottom;}
+    .small{font-size:11px;color:#9e9e9e;text-align:center;margin-top:10px}
+    /* retro buttons icons */
+    .ico{width:14px;height:14px;display:inline-block}
+    .play:before{content:"►";font-size:14px;color:var(--accent)}
+    .pause:before{content:"❚❚";font-size:12px;color:var(--accent)}
+    .stop:before{content:"■";font-size:12px;color:var(--accent)}
+    .rew:before{content:"⏮";font-size:12px;color:var(--muted)}
+    .fwd:before{content:"⏭";font-size:12px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="player" role="application" aria-label="Retro music player">
+    <div class="title">Retro Music Player</div>
+
+    <div class="display">
+      <div class="disc" id="disc"></div>
+      <div class="meta">
+        <div class="file" id="filename">1.mp3</div>
+        <div class="artist">Unknown Artist — 1.mp3</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div style="display:flex;gap:8px">
+        <button class="btn" id="rew"><span class="ico rew"></span> Rew</button>
+        <button class="btn big" id="playPause"><span class="ico play" id="playIcon"></span> <span id="ppText">Play</span></button>
+        <button class="btn" id="stop"><span class="ico stop"></span> Stop</button>
+        <button class="btn" id="fwd"><span class="ico fwd"></span> Fwd</button>
+      </div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="flex:1">
+            <div class="progress" id="progress">
+              <div class="bar" id="bar"></div>
+            </div>
+          </div>
+          <div class="time" id="time">00:00 / 00:00</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="meters" id="meters" aria-hidden="true">
+      <div class="meter" style="height:10px"></div>
+      <div class="meter" style="height:18px"></div>
+      <div class="meter" style="height:6px"></div>
+      <div class="meter" style="height:22px"></div>
+      <div class="meter" style="height:12px"></div>
+      <div class="meter" style="height:16px"></div>
+    </div>
+
+    <div class="small">Drop a new file named <strong>1.mp3</strong> into this folder to replace the track.</div>
+
+    <!-- Hidden native audio -->
+    <audio id="audio" src="1.mp3" preload="metadata"></audio>
+  </div>
+
+  <script>
+    const audio = document.getElementById('audio');
+    const playPauseBtn = document.getElementById('playPause');
+    const playIcon = document.getElementById('playIcon');
+    const ppText = document.getElementById('ppText');
+    const stopBtn = document.getElementById('stop');
+    const rewBtn = document.getElementById('rew');
+    const fwdBtn = document.getElementById('fwd');
+    const bar = document.getElementById('bar');
+    const progress = document.getElementById('progress');
+    const timeEl = document.getElementById('time');
+    const disc = document.getElementById('disc');
+    const meters = document.querySelectorAll('.meter');
+
+    // Format seconds to mm:ss
+    function fmt(s){
+      if (!isFinite(s)) return '00:00';
+      const m = Math.floor(s/60).toString().padStart(2,'0');
+      const sec = Math.floor(s%60).toString().padStart(2,'0');
+      return `${m}:${sec}`;
+    }
+
+    // Update time and progress
+    function update(){
+      const cur = audio.currentTime;
+      const dur = audio.duration || 0;
+      const pct = dur ? (cur/dur)*100 : 0;
+      bar.style.width = pct + '%';
+      timeEl.textContent = `${fmt(cur)} / ${fmt(dur)}`;
+      // rotate disc a bit while playing
+      if (!audio.paused) {
+        disc.style.transform = `rotate(${(cur*30)%360}deg)`;
+      }
+      // simple fake meters animation
+      meters.forEach((m,i)=> {
+        if (audio.paused) {
+          m.style.height = (6 + i*2) + 'px';
+          m.style.opacity = '0.35';
+        } else {
+          const v = 6 + Math.abs(Math.sin(Date.now()/200 + i))*26;
+          m.style.height = v + 'px';
+          m.style.opacity = '1';
+        }
+      });
+    }
+
+    // Toggle play/pause
+    function togglePlay(){
+      if (audio.paused){
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+
+    audio.addEventListener('play', ()=> {
+      playIcon.className = 'ico pause';
+      ppText.textContent = 'Pause';
+      update();
+    });
+    audio.addEventListener('pause', ()=> {
+      playIcon.className = 'ico play';
+      ppText.textContent = 'Play';
+      update();
+    });
+    audio.addEventListener('timeupdate', update);
+    audio.addEventListener('loadedmetadata', update);
+    audio.addEventListener('ended', ()=> {
+      playIcon.className = 'ico play';
+      ppText.textContent = 'Play';
+      bar.style.width = '0%';
+    });
+
+    playPauseBtn.addEventListener('click', togglePlay);
+    stopBtn.addEventListener('click', ()=> {
+      audio.pause();
+      audio.currentTime = 0;
+      update();
+    });
+
+    // small skip
+    rewBtn.addEventListener('click', ()=> {
+      audio.currentTime = Math.max(0, audio.currentTime - 10);
+      update();
+    });
+    fwdBtn.addEventListener('click', ()=> {
+      audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10);
+      update();
+    });
+
+    // Seek by clicking progress bar
+    progress.addEventListener('click', (e) => {
+      const rect = progress.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const pct = x / rect.width;
+      if (audio.duration) {
+        audio.currentTime = pct * audio.duration;
+      }
+      update();
+    });
+
+    // Keyboard: space toggles play/pause
+    document.addEventListener('keydown', (e)=>{
+      if (e.code === 'Space' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        togglePlay();
+      }
+    });
+
+    // Update UI frequently while playing for disc/meter animation
+    setInterval(()=> {
+      if (!audio.paused) update();
+    }, 120);
+
+    // If file missing, show alert on error
+    audio.addEventListener('error', ()=>{
+      const fn = document.getElementById('filename');
+      fn.textContent = '1.mp3 (not found)';
+      ppText.textContent = 'Play';
+      playIcon.className = 'ico play';
+    });
+  </script>
+</body>
+</html>
