@@ -43,34 +43,10 @@
       background: black;
       z-index: 9999;
     }
-	.yellow-dot {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 5px solid yellow;
-    box-shadow: 0 0 20px yellow;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .yellow-dot iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
     .red-dot-iframe-container iframe {
       width: 100%;
       height: 100%;
       border: none;
-    }
-	.yellow-dot {
-      width: 30px;
-      height: 30px;
-      background: yellow;
-      border-radius: 50%;
-      box-shadow: 0 0 10px yellow;
-      z-index: 10;
     }
 	</style>
 </head>
@@ -78,10 +54,6 @@
   <div class="red-dot"></div>
   <div class="red-dot-iframe-container">
      <iframe src="https://html-preview.github.io/?url=https://github.com/presence-chooser/upload/blob/main/mp6.html"></iframe>
-  </div>
-  <div class="yellow-dot"></div>
-  <div class="yellow-dot-iframe-container">
-     <iframe src="https://html-preview.github.io/?url=https://presence-chooser.github.io/upload/googlecde88829844b40a5.html"></iframe>
   </div>
 	<form id="previewform" onsubmit="location.href='/?'+this.file.value;return false">
 		<h1>GitHub &amp; BitBucket HTML Preview</h1>
@@ -105,20 +77,10 @@
 		<p id="footer">Developed by <a href="https://github.com/niutech">niu tech</a> | Contribute on <a href="https://github.com/htmlpreview/htmlpreview.github.com">GitHub</a></p>
 	</form>
 	<script src="/htmlpreview.js"></script>
-	<form id="previewform" onsubmit="location.href='/?'+this.file.value;return false">
-		<h1>GitHub &amp; BitBucket HTML Preview</h1>
-		<p>
-			Enter URL of the HTML file to preview:
-			<input type="url" id="file" value="https://html-preview.github.io/?url=https://github.com/presence-chooser/upload/blob/main/googlecde88829844b40a5.html" placeholder="https://html-preview.github.io/?url=https://github.com/presence-chooser/upload/blob/main/googlecde88829844b40a5.html" size="60" autofocus>
-			<input type="submit" value="Preview">
-		</p>
-		<p>or prepend to the URL: <code><strong>http://htmlpreview.github.io/?</strong>https://github.com/twbs/bootstrap/blob/gh-pages/2.3.2/index.html</code></p>
-		<p id="footer">Developed by <a href="https://github.com/niutech">niu tech</a> | Contribute on <a href="https://github.com/htmlpreview/htmlpreview.github.com">GitHub</a></p>
-	</form>
-	<script src="/htmlpreview.js"></script>
 	https://presence-chooser.github.io/upload/
 </body>
 </html>
+
 
 
 
