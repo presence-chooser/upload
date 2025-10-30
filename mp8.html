@@ -1,0 +1,185 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>1.mp3 — Retro Music Player</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .yellow-dot {
+      width: 30px;
+      height: 30px;
+      background: yellow;
+      border-radius: 50%;
+      box-shadow: 0 0 10px yellow;
+      z-index: 10;
+    }
+    .red-dot-iframe-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 100vmin; /* Fullscreen circle, scaled to the smaller dimension */
+      height: 100vmin;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      overflow: hidden;
+      border: 10px solid red;
+      box-shadow: 0 0 60px red;
+      background: black;
+      z-index: 9999;
+    }
+    .red-dot-iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="index, follow">
+  <!-- ✅ SEO META TAGS -->
+  <meta name="description" content="Listen to 1.mp3 on this simple retro music player. Free, classic HTML audio player for your favorite song." />
+  <meta name="keywords" content="music player, 1.mp3, HTML audio, retro music player, free mp3 player" />
+  <meta name="author" content="Presence Chooser" />
+
+  <!-- ✅ Open Graph / Social -->
+  <meta property="og:title" content="1.mp3 — Retro Music Player" />
+  <meta property="og:description" content="Play 1.mp3 with this simple retro HTML music player." />
+  <meta property="og:type" content="music.song" />
+  <meta property="og:url" content="https://example.com/player.html" />
+  <meta property="og:audio" content="https://github.com/presence-chooser/upload/blob/main/1.mp3" />
+
+  <!-- ✅ JSON-LD Schema (for Google indexing as a music file) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MusicRecording",
+    "name": "1.mp3",
+    "byArtist": { "@type": "MusicGroup", "name": "Farzin Eshghe Man RRmix" },
+    "inAlbum": "Retro Collection",
+    "url": "https://html-preview.github.io/?url=https://github.com/presence-chooser/upload/blob/main/mp3.html",
+    "audio": "https://example.com/1.mp3",
+    "genre": "Instrumental",
+    "description": "تو را از بین صدها گل جدا کردم
+تو سینه جشن عشقت رو به پا کردم
+برای نقطه ی پایان تنهایی
+تو تنها اسمی بودی که صدا کردم
+    عشق من عشق من عشق من عشق من
+بگو از پاکی چشمه منو لبریز خواستن کن
+با دستات حلقه ای از گل بساز و گردن من کن
+اگه از مرگ باورها از آدمها دلم سرده
+نوازش کن تو دستام رو که خیلی وقته یخ کرده"
+  }
+  </script>
+
+  <style>
+    :root{--bg:#1b1b1b;--panel:#2f2b2b;--accent:#f3c623;--muted:#bdbdbd;--glass:rgba(255,255,255,0.03);}
+    html,body{height:100%;margin:0;font-family:"Segoe UI",sans-serif;background:linear-gradient(180deg,#0f0f0f,#141414);color:var(--muted);display:flex;align-items:center;justify-content:center;flex-direction:column;}
+    .player{width:360px;background:linear-gradient(180deg,var(--panel),#231f1f);border-radius:12px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03);}
+    .title{font-weight:700;color:var(--accent);font-size:16px;margin-bottom:8px;text-align:center;letter-spacing:0.6px;}
+    .display{background:var(--glass);padding:10px;border-radius:8px;display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+    .disc{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#222,#3a3a3a);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -6px 14px rgba(0,0,0,0.6);position:relative;}
+    .disc::after{content:"";width:10px;height:10px;border-radius:50%;background:#0b0b0b;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);}
+    .meta{flex:1;}
+    .meta .file{font-size:13px;color:var(--muted);margin-bottom:6px;}
+    .meta .artist{font-size:12px;color:#c6b59a;}
+    .controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .btn{background:transparent;border:0;padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:8px;user-select:none;}
+    .btn:hover{background:rgba(255,255,255,0.02)} .btn:active{transform:translateY(1px)}
+    .big{background:linear-gradient(90deg,#111,#1b1b1b);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);}
+    .progress{height:8px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden;cursor:pointer;}
+    .progress .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#ff9f1c);}
+    .time{font-size:12px;color:var(--muted);margin-left:8px;min-width:72px;text-align:right;}
+    .small{font-size:11px;color:#9e9e9e;text-align:center;margin-top:10px}
+    .ico{width:14px;height:14px;display:inline-block}
+    .play:before{content:"►";color:var(--accent)}
+    .pause:before{content:"❚❚";color:var(--accent)}
+    .stop:before{content:"■";color:var(--accent)}
+  </style>
+</head>
+<body>
+  <div class="player">
+    <div class="title">1.mp3 — Retro Music Player</div>
+    <div class="display">
+      <div class="disc" id="disc"></div>
+      <div class="meta">
+        <div class="file" id="filename">1.mp3</div>
+        <div class="artist">Unknown Artist — Instrumental</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="playPause"><span class="ico play" id="playIcon"></span> <span id="ppText">Play</span></button>
+      <button class="btn" id="stop"><span class="ico stop"></span> Stop</button>
+      <div class="time" id="time">00:00 / 00:00</div>
+    </div>
+
+    <div class="progress" id="progress">
+      <div class="bar" id="bar"></div>
+    </div>
+
+    <div class="small">Enjoy this simple HTML music player. Replace <b>1.mp3</b> with your favorite track!</div>
+    <audio id="audio" src="1.mp3" preload="metadata"></audio>
+  </div>
+
+  <!-- ✅ Searchable text section -->
+  <section style="max-width:600px;text-align:center;margin-top:30px;padding:10px;">
+    <h1>Listen to 1.mp3 Online</h1>
+    <p>
+تو را از بین صدها گل جدا کردم
+تو سینه جشن عشقت رو به پا کردم
+برای نقطه ی پایان تنهایی
+تو تنها اسمی بودی که صدا کردم
+عشق من عشق من عشق من عشق من
+بگو از پاکی چشمه منو لبریز خواستن کن
+با دستات حلقه ای از گل بساز و گردن من کن
+اگه از مرگ باورها از آدمها دلم سرده
+نوازش کن تو دستام رو که خیلی وقته یخ کرده
+    </p>
+    <p>
+      Keywords: <em>تو را از بین صدها گل جدا کردم
+تو سینه جشن عشقت رو به پا کردم
+برای نقطه ی پایان تنهایی
+تو تنها اسمی بودی که صدا کردم
+عشق من عشق من عشق من عشق من
+بگو از پاکی چشمه منو لبریز خواستن کن
+با دستات حلقه ای از گل بساز و گردن من کن
+اگه از مرگ باورها از آدمها دلم سرده
+نوازش کن تو دستام رو که خیلی وقته یخ کرده</em>
+    </p>
+  </section>
+
+  <script>
+    const audio = document.getElementById('audio');
+    const playPauseBtn = document.getElementById('playPause');
+    const playIcon = document.getElementById('playIcon');
+    const ppText = document.getElementById('ppText');
+    const stopBtn = document.getElementById('stop');
+    const bar = document.getElementById('bar');
+    const progress = document.getElementById('progress');
+    const timeEl = document.getElementById('time');
+
+    function fmt(s){const m=Math.floor(s/60).toString().padStart(2,'0');const sec=Math.floor(s%60).toString().padStart(2,'0');return`${m}:${sec}`;}
+    function update(){const cur=audio.currentTime,dur=audio.duration||0;bar.style.width=((cur/dur)*100||0)+'%';timeEl.textContent=`${fmt(cur)} / ${fmt(dur)}`;}
+    function togglePlay(){if(audio.paused)audio.play();else audio.pause();}
+    audio.addEventListener('play',()=>{playIcon.className='ico pause';ppText.textContent='Pause';});
+    audio.addEventListener('pause',()=>{playIcon.className='ico play';ppText.textContent='Play';});
+    audio.addEventListener('timeupdate',update);
+    audio.addEventListener('loadedmetadata',update);
+    playPauseBtn.onclick=togglePlay;
+    stopBtn.onclick=()=>{audio.pause();audio.currentTime=0;update();}
+    progress.onclick=e=>{const r=progress.getBoundingClientRect();audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration;}
+  </script>
+  <div class="yellow-dot">
+    <div class="red-dot-iframe-container">
+       <iframe src="https://html-preview.github.io/?url=https://github.com/presence-chooser/upload/blob/main/mp6.html"></iframe>
+    </div>
+  </div>
+</body>
+</html>
