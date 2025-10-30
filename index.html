@@ -29,9 +29,16 @@
 		font-size: 10px;
 		color: #666;
 	}
+	.red-dot {
+      width: 30px;
+      height: 30px;
+      background: red;
+      border-radius: 50%;
+      box-shadow: 0 0 10px red;
 	</style>
 </head>
 <body>
+	<div class="red-dot"></div>
 	<form id="previewform" onsubmit="location.href='/?'+this.file.value;return false">
 		<h1>GitHub &amp; BitBucket HTML Preview</h1>
 		<p>
@@ -56,3 +63,4 @@
 	<script src="/htmlpreview.js"></script>
 </body>
 </html>
+
