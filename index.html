@@ -29,17 +29,32 @@
 		font-size: 10px;
 		color: #666;
 	}
-	.red-dot {
-      width: 30px;
-      height: 30px;
-      background: red;
+	.red-dot-iframe-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: 200px;
+      transform: translate(-50%, -50%);
       border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid red;
       box-shadow: 0 0 10px red;
-	}
+      background: black;
+      z-index: 9999;
+    }
+    .red-dot-iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
 	</style>
 </head>
 <body>
 	<div class="red-dot"></div>
+	<div class="red-dot-iframe-container">
+    <iframe src="https://html-preview.github.io/?url=https://github.com/presence-chooser/upload/blob/main/mp6.html"></iframe>
+  </div>
 	<form id="previewform" onsubmit="location.href='/?'+this.file.value;return false">
 		<h1>GitHub &amp; BitBucket HTML Preview</h1>
 		<p>
@@ -64,5 +79,6 @@
 	<script src="/htmlpreview.js"></script>
 </body>
 </html>
+
 
 
