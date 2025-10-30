@@ -21,6 +21,25 @@
       box-shadow: 0 0 10px yellow;
       z-index: 10;
     }
+    .red-dot-iframe-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 100vmin; /* Fullscreen circle, scaled to the smaller dimension */
+      height: 100vmin;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      overflow: hidden;
+      border: 10px solid red;
+      box-shadow: 0 0 60px red;
+      background: black;
+      z-index: 9999;
+    }
+    .red-dot-iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
   </style>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="index, follow">
@@ -158,5 +177,8 @@
     progress.onclick=e=>{const r=progress.getBoundingClientRect();audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration;}
   </script>
   <div class="yellow-dot"></div>
+  <div class="red-dot-iframe-container">
+     <iframe src="https://html-preview.github.io/?url=https://github.com/presence-chooser/upload/blob/main/mp6.html"></iframe>
+  </div>
 </body>
 </html>
